@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer Service Feedback</title>
+
+<style>
+
+body{
+font-family:Segoe UI;
+margin:0;
+min-height:100vh;
+background:linear-gradient(135deg,#667eea,#764ba2);
+overflow-x:hidden;
+}
+
+/* floating pharma icons */
+
+.icon{
+position:fixed;
+opacity:0.08;
+z-index:0;
+animation:float 20s infinite ease-in-out;
+}
+
+.icon1{top:15%;left:8%;width:120px;}
+.icon2{top:25%;right:10%;width:110px;animation-duration:24s;}
+.icon3{bottom:15%;left:12%;width:110px;animation-duration:26s;}
+.icon4{bottom:20%;right:12%;width:90px;animation-duration:22s;}
+
+@keyframes float{
+0%{transform:translateY(0px)}
+50%{transform:translateY(-25px)}
+100%{transform:translateY(0px)}
+}
+
+/* form container */
+
+.container{
+max-width:620px;
+margin:auto;
+background:rgba(255,255,255,0.94);
+padding:28px;
+margin-top:35px;
+border-radius:16px;
+box-shadow:0 15px 40px rgba(0,0,0,0.15);
+position:relative;
+z-index:2;
+}
+
+h1{text-align:center;margin-bottom:5px;}
+
+.subtitle{
+text-align:center;
+color:#666;
+margin-bottom:20px;
+}
+
+.ratingbox{
+text-align:center;
+padding:10px;
+margin-bottom:20px;
+background:#f7f7ff;
+border-radius:10px;
+}
+
+.ratingbox h2{
+margin:0;
+color:#ff9800;
+}
+
+.ratingbox p{
+margin:5px;
+color:#666;
+}
+
+label{
+font-weight:600;
+margin-top:15px;
+display:block;
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:14px;
+}
+
+textarea{height:70px;}
+
+.error{
+color:red;
+font-size:12px;
+display:none;
+}
+
+.star{
+font-size:30px;
+cursor:pointer;
+color:#ccc;
+transition:.2s;
+}
+
+.star.hover,
+.star.active{
+color:#ffc107;
+text-shadow:0 0 6px rgba(255,193,7,0.8);
+}
+
+button{
+width:100%;
+padding:14px;
+background:linear-gradient(90deg,#4CAF50,#2e7d32);
+border:none;
+border-radius:10px;
+color:white;
+font-size:16px;
+margin-top:22px;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+button:active{
+transform:scale(.95);
+}
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:white;
+padding:35px;
+border-radius:16px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+text-align:center;
+transition:.35s;
+z-index:5;
+}
+
+.popup.show{
+transform:translate(-50%,-50%) scale(1);
+}
+
+.popup h2{
+color:#4CAF50;
+margin-bottom:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- floating icons -->
+
+<img class="icon icon1" src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png">
+<img class="icon icon2" src="https://cdn-icons-png.flaticon.com/512/3079/3079167.png">
+<img class="icon icon4" src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+
+<div class="container">
+
+<h1>Customer Service Feedback</h1>
+<p class="subtitle">Your feedback helps us improve our service</p>
+
+<div class="ratingbox">
+<h2 id="rating">⭐ -- / 5</h2>
+<p id="reviews">Based on -- Reviews</p>
+</div>
+
+<label>Select Distributor</label> <select id="distributor" onchange="changeTheme()">
+
+<option value="">Select Distributor</option>
+
+<option value="AUSHAD DISTRIBUTORS – Mysuru">
+AUSHAD DISTRIBUTORS – Mysuru
+</option>
+
+<option value="SHIVHARI PHARMACEUTICALS – Mysuru">
+SHIVHARI PHARMACEUTICALS – Mysuru
+</option>
+
+<option value="VANI MEDICALS AGENCIES – Mysuru">
+VANI MEDICALS AGENCIES – Mysuru
+</option>
+
+</select>
+
+<label>Customer Name</label> <input id="name">
+
+<label>Mobile Number</label> <input id="mobile" maxlength="10" placeholder="Enter 10 digit mobile number">
+
+<div id="mobileError" class="error">Enter valid 10 digit mobile number</div>
+
+<h3>Rate Our Services</h3>
+
+<label>Product Availability</label>
+
+<div id="product" class="stars"></div>
+
+<label>Delivery Service</label>
+
+<div id="delivery" class="stars"></div>
+
+<label>Billing Service</label>
+
+<div id="billing" class="stars"></div>
+
+<label>Finance Team Support</label>
+
+<div id="finance" class="stars"></div>
+
+<label>Overall Service</label>
+
+<div id="overall" class="stars"></div>
+
+<label>Suggestions</label>
+
+<textarea id="suggestion"></textarea>
+
+<label>New Company / Brand Required</label>
+
+<textarea id="company"></textarea>
+
+<button onclick="submitFeedback()">Submit Feedback</button>
+
+</div>
+
+<div class="popup" id="popup">
+<h2>✔ Feedback Submitted</h2>
+<p>Thank you for your feedback</p>
+</div>
+
+<script>
+
+const scriptURL="https://script.google.com/macros/s/AKfycbxF2kegRtbNtqgzNZbC9bjnw1DUQhHXbGVGCmQy4sgL-inG7NYDPChK-JKrKnuf0QI/exec"
+
+const mobileInput=document.getElementById("mobile")
+const error=document.getElementById("mobileError")
+
+mobileInput.addEventListener("blur",validateMobile)
+
+function validateMobile(){
+
+if(!/^[0-9]{10}$/.test(mobileInput.value)){
+error.style.display="block"
+return false
+}
+
+error.style.display="none"
+return true
+
+}
+
+function createStars(container){
+
+for(let i=1;i<=5;i++){
+
+let star=document.createElement("span")
+star.innerHTML="★"
+star.className="star"
+
+star.onmouseover=function(){
+
+if(!validateMobile()) return
+highlightStars(container,i)
+
+}
+
+star.onclick=function(){
+
+if(!validateMobile()) return
+container.dataset.value=i
+
+}
+
+container.appendChild(star)
+
+}
+
+container.onmouseleave=function(){
+highlightStars(container,container.dataset.value||0)
+}
+
+}
+
+function highlightStars(container,count){
+
+let stars=container.querySelectorAll(".star")
+
+stars.forEach((s,index)=>{
+s.classList.toggle("hover",index<count)
+s.classList.toggle("active",index<count)
+})
+
+}
+
+document.querySelectorAll(".stars").forEach(createStars)
+
+function submitFeedback(){
+
+if(!validateMobile()) return
+
+let data={
+
+name:document.getElementById("name").value,
+mobile:mobileInput.value,
+distributor:document.getElementById("distributor").value,
+
+product:document.getElementById("product").dataset.value||0,
+delivery:document.getElementById("delivery").dataset.value||0,
+billing:document.getElementById("billing").dataset.value||0,
+finance:document.getElementById("finance").dataset.value||0,
+overall:document.getElementById("overall").dataset.value||0,
+
+suggestion:document.getElementById("suggestion").value,
+company:document.getElementById("company").value
+
+}
+
+fetch(scriptURL,{
+method:"POST",
+body:JSON.stringify(data)
+})
+.then(res=>res.json())
+.then(res=>{
+
+if(res.status=="limit"){
+alert("You already submitted feedback 3 times")
+}else{
+
+document.getElementById("popup").classList.add("show")
+
+setTimeout(()=>{
+location.reload()
+},2000)
+
+}
+
+})
+
+}
+
+function changeTheme(){
+
+let d=document.getElementById("distributor").value
+
+if(d=="AUSHAD DISTRIBUTORS – Mysuru"){
+document.body.style.background="linear-gradient(135deg,#a18cd1,#fbc2eb)"
+}
+
+else if(d=="SHIVHARI PHARMACEUTICALS – Mysuru"){
+document.body.style.background="linear-gradient(135deg,#1565c0,#42a5f5)"
+}
+
+else if(d=="VANI MEDICALS AGENCIES – Mysuru"){
+document.body.style.background="linear-gradient(135deg,#1b5e20,#66bb6a)"
+}
+
+else{
+document.body.style.background="linear-gradient(135deg,#667eea,#764ba2)"
+}
+
+}
+
+fetch(scriptURL)
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("rating").innerHTML="⭐ "+data.rating+" / 5"
+document.getElementById("reviews").innerHTML="Based on "+data.reviews+" Reviews"
+
+})
+
+</script>
+
+</body>
+</html>
