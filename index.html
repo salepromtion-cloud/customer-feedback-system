@@ -16,8 +16,6 @@ background:linear-gradient(135deg,#667eea,#764ba2);
 overflow-x:hidden;
 }
 
-/* floating pharma icons */
-
 .icon{
 position:fixed;
 opacity:0.08;
@@ -27,7 +25,6 @@ animation:float 20s infinite ease-in-out;
 
 .icon1{top:15%;left:8%;width:120px;}
 .icon2{top:25%;right:10%;width:110px;animation-duration:24s;}
-.icon3{bottom:15%;left:12%;width:110px;animation-duration:26s;}
 .icon4{bottom:20%;right:12%;width:90px;animation-duration:22s;}
 
 @keyframes float{
@@ -35,8 +32,6 @@ animation:float 20s infinite ease-in-out;
 50%{transform:translateY(-25px)}
 100%{transform:translateY(0px)}
 }
-
-/* form container */
 
 .container{
 max-width:620px;
@@ -163,8 +158,6 @@ margin-bottom:8px;
 
 <body>
 
-<!-- floating icons -->
-
 <img class="icon icon1" src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png">
 <img class="icon icon2" src="https://cdn-icons-png.flaticon.com/512/3079/3079167.png">
 <img class="icon icon4" src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
@@ -183,17 +176,9 @@ margin-bottom:8px;
 
 <option value="">Select Distributor</option>
 
-<option value="AUSHAD DISTRIBUTORS – Mysuru">
-AUSHAD DISTRIBUTORS – Mysuru
-</option>
-
-<option value="SHIVHARI PHARMACEUTICALS – Mysuru">
-SHIVHARI PHARMACEUTICALS – Mysuru
-</option>
-
-<option value="VANI MEDICALS AGENCIES – Mysuru">
-VANI MEDICALS AGENCIES – Mysuru
-</option>
+<option value="AUSHAD DISTRIBUTORS – Mysuru">AUSHAD DISTRIBUTORS – Mysuru</option>
+<option value="SHIVHARI PHARMACEUTICALS – Mysuru">SHIVHARI PHARMACEUTICALS – Mysuru</option>
+<option value="VANI MEDICALS AGENCIES – Mysuru">VANI MEDICALS AGENCIES – Mysuru</option>
 
 </select>
 
@@ -209,17 +194,21 @@ VANI MEDICALS AGENCIES – Mysuru
 
 <div id="product" class="stars"></div>
 
-<label>Delivery Service</label>
-
-<div id="delivery" class="stars"></div>
-
-<label>Billing Service</label>
+<label>Billing & App Service</label>
 
 <div id="billing" class="stars"></div>
 
 <label>Finance Team Support</label>
 
 <div id="finance" class="stars"></div>
+
+<label>Salesman Support</label>
+
+<div id="salesman" class="stars"></div>
+
+<label>Delivery & Packing</label>
+
+<div id="delivery" class="stars"></div>
 
 <label>Overall Service</label>
 
@@ -272,17 +261,13 @@ star.innerHTML="★"
 star.className="star"
 
 star.onmouseover=function(){
-
 if(!validateMobile()) return
 highlightStars(container,i)
-
 }
 
 star.onclick=function(){
-
 if(!validateMobile()) return
 container.dataset.value=i
-
 }
 
 container.appendChild(star)
@@ -319,9 +304,10 @@ mobile:mobileInput.value,
 distributor:document.getElementById("distributor").value,
 
 product:document.getElementById("product").dataset.value||0,
-delivery:document.getElementById("delivery").dataset.value||0,
 billing:document.getElementById("billing").dataset.value||0,
 finance:document.getElementById("finance").dataset.value||0,
+salesman:document.getElementById("salesman").dataset.value||0,
+delivery:document.getElementById("delivery").dataset.value||0,
 overall:document.getElementById("overall").dataset.value||0,
 
 suggestion:document.getElementById("suggestion").value,
@@ -336,17 +322,11 @@ body:JSON.stringify(data)
 .then(res=>res.json())
 .then(res=>{
 
-if(res.status=="limit"){
-alert("You already submitted feedback 3 times")
-}else{
-
 document.getElementById("popup").classList.add("show")
 
 setTimeout(()=>{
 location.reload()
 },2000)
-
-}
 
 })
 
@@ -387,4 +367,3 @@ document.getElementById("reviews").innerHTML="Based on "+data.reviews+" Reviews"
 
 </body>
 </html>
-
