@@ -299,9 +299,9 @@ if(!validateMobile()) return
 
 let data={
 
+distributor:document.getElementById("distributor").value,
 name:document.getElementById("name").value,
 mobile:mobileInput.value,
-distributor:document.getElementById("distributor").value,
 
 product:document.getElementById("product").dataset.value||0,
 billing:document.getElementById("billing").dataset.value||0,
@@ -367,3 +367,4 @@ document.getElementById("reviews").innerHTML="Based on "+data.reviews+" Reviews"
 
 </body>
 </html>
+
